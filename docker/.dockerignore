@@ -1,0 +1,24 @@
+# Version Control
+.git
+.gitignore
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+.venv
+
+# PowerPoint Files (Don't bake generated files into the image)
+*.pptx
+*.pdf
+*.png
+*.jpg
+
+# Docker
+docker/
+scripts/

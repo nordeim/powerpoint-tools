@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ppt_get_info Output Schema",
+  "type": "object",
+  "required": ["tool_name", "tool_version", "schema_version", "file", "presentation_version", "slide_count", "slides"],
+  "properties": {
+    "tool_name": { "type": "string" },
+    "tool_version": { "type": "string" },
+    "schema_version": { "type": "string" },
+    "file": { "type": "string" },
+    "presentation_version": { "type": "string" },
+    "slide_count": { "type": "integer", "minimum": 0 },
+    "slides": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["index", "id", "layout", "shape_count"],
+        "properties": {
+          "index": { "type": "integer", "minimum": 0 },
+          "id": { "type": "string" },
+          "layout": { "type": "string" },
+          "shape_count": { "type": "integer", "minimum": 0 },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "template_id": { "type": ["string", "null"] },
+    "theme": {
+      "type": ["object", "null"],
+      "properties": {
+        "primary_color": { "type": "string" },
+        "accent_colors": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "font_family": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false
+}

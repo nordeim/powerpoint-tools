@@ -1,0 +1,90 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Presentation Change Manifest",
+    "type": "object",
+    "required": [
+        "manifest_id",
+        "source_file",
+        "work_copy",
+        "operations",
+        "created_by",
+        "timestamp",
+        "approval_token"
+    ],
+    "properties": {
+        "manifest_id": {
+            "type": "string"
+        },
+        "source_file": {
+            "type": "string"
+        },
+        "work_copy": {
+            "type": "string"
+        },
+        "created_by": {
+            "type": "string"
+        },
+        "timestamp": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "approval_token": {
+            "type": "string"
+        },
+        "operations": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "op_id",
+                    "cmd",
+                    "args",
+                    "expected_effect"
+                ],
+                "properties": {
+                    "op_id": {
+                        "type": "string"
+                    },
+                    "cmd": {
+                        "type": "string"
+                    },
+                    "args": {
+                        "type": "object"
+                    },
+                    "expected_effect": {
+                        "type": "string"
+                    },
+                    "rollback_cmd": {
+                        "type": "string"
+                    },
+                    "critical": {
+                        "type": "boolean"
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "diff_summary": {
+            "type": "object",
+            "properties": {
+                "slides_added": {
+                    "type": "integer"
+                },
+                "slides_removed": {
+                    "type": "integer"
+                },
+                "shapes_added": {
+                    "type": "integer"
+                },
+                "shapes_removed": {
+                    "type": "integer"
+                }
+            },
+            "additionalProperties": false
+        },
+        "notes": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": false
+}

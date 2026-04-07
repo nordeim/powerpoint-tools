@@ -1,0 +1,87 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "ppt_capability_probe Output Schema",
+    "type": "object",
+    "required": [
+        "tool_name",
+        "tool_version",
+        "schema_version",
+        "file",
+        "probe_timestamp",
+        "capabilities"
+    ],
+    "properties": {
+        "tool_name": {
+            "type": "string"
+        },
+        "tool_version": {
+            "type": "string"
+        },
+        "schema_version": {
+            "type": "string"
+        },
+        "file": {
+            "type": "string"
+        },
+        "probe_timestamp": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "capabilities": {
+            "type": "object",
+            "required": [
+                "can_read",
+                "can_write",
+                "layouts",
+                "slide_dimensions"
+            ],
+            "properties": {
+                "can_read": {
+                    "type": "boolean"
+                },
+                "can_write": {
+                    "type": "boolean"
+                },
+                "layouts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "slide_dimensions": {
+                    "type": "object",
+                    "required": [
+                        "width_pt",
+                        "height_pt"
+                    ],
+                    "properties": {
+                        "width_pt": {
+                            "type": "number"
+                        },
+                        "height_pt": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "max_image_size_mb": {
+                    "type": "number"
+                },
+                "supports_z_order": {
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": true
+        },
+        "warnings": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "metadata": {
+            "type": "object",
+            "additionalProperties": true
+        }
+    },
+    "additionalProperties": false
+}

@@ -1,0 +1,63 @@
+$ docker build -t ppt-agent-tools:latest -f docker/Dockerfile .
+[+] Building 29.6s (14/14) FINISHED                                                                          docker:default
+ => [internal] load build definition from Dockerfile                                                                   0.3s
+ => => transferring dockerfile: 1.74kB                                                                                 0.0s
+ => [internal] load metadata for docker.io/library/python:3.13-trixie                                                  1.1s
+ => [internal] load .dockerignore                                                                                      0.3s
+ => => transferring context: 274B                                                                                      0.0s
+ => [1/9] FROM docker.io/library/python:3.13-trixie@sha256:f2578785b6c139fb4315a4e701a4d2412919ab6301b058eaf49766ce68  0.0s
+ => [internal] load build context                                                                                      0.3s
+ => => transferring context: 5.07kB                                                                                    0.0s
+ => CACHED [2/9] WORKDIR /app                                                                                          0.0s
+ => CACHED [3/9] RUN apt-get update && apt-get install -y --no-install-recommends     curl     libreoffice-impress     0.1s
+ => [4/9] COPY bin/uv /app/bin/uv                                                                                      2.3s
+ => [5/9] COPY bin/uvx /app/bin/uvx                                                                                    1.6s
+ => [6/9] RUN chmod +x /app/bin/uv /app/bin/uvx                                                                        3.2s
+ => [7/9] COPY requirements.txt .                                                                                      1.6s
+ => [8/9] RUN uv pip install --system -r requirements.txt                                                             11.3s
+ => [9/9] COPY . .                                                                                                     2.7s 
+ => exporting to image                                                                                                 3.2s 
+ => => exporting layers                                                                                                2.8s 
+ => => writing image sha256:145fedc7248366b9a49287e47545cca343c29e4954ae9c8e5d59692b7c7e5a84                           0.1s 
+ => => naming to docker.io/jeremiahwong/ppt-agent-tools:latest                                                         0.1s 
+
+$ docker images
+REPOSITORY                                      TAG                IMAGE ID       CREATED          SIZE
+ppt-agent-tools                    latest             145fedc72483   12 minutes ago   1.75GB
+
+$ docker run -d --name ppt-agent-tools ppt-agent-tools:latest /bin/bash -c "while true; do sleep 86400; done"239bf8bf1c6b545a10ae4eb46e767470410e803c4abe7fa74a96ca18b2fb68a2
+
+$ docker ps
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED         STATUS         PORTS     NAMES
+239bf8bf1c6b   ppt-agent-tools:latest   "/bin/bash -c 'while…"   5 seconds ago   Up 4 seconds             ppt-agent-tools
+
+$ docker login
+Authenticating with existing credentials... [Username: nordeim]
+
+i Info → To login with a different account, run 'docker logout' followed by 'docker login'
+
+
+Login Succeeded
+
+$ docker tag ppt-agent-tools:latest nordeim/ppt-agent-tools:latest
+Error response from daemon: No such image: ppt-agent-tools:latest
+
+$ docker push nordeim/ppt-agent-tools:latest
+The push refers to repository [docker.io/nordeim/ppt-agent-tools]
+3dbd6a7b5a94: Pushed 
+0fba2806a510: Pushed 
+f60ab916f26d: Pushed 
+abea46851b49: Pushed 
+296f6889fa31: Pushed 
+3412e9bc355e: Pushed 
+a5683613ecc7: Pushed 
+023244ecde11: Pushed 
+0a890cd667c2: Mounted from library/python 
+a1f1e7b8d6b5: Mounted from library/python 
+115862df94e5: Mounted from library/python 
+c260bc0a2fb0: Mounted from library/python 
+ab5274a5c04f: Mounted from library/python 
+4c0d21a7af80: Mounted from library/python 
+683afd177344: Mounted from library/python 
+latest: digest: sha256:bb2e1b477d4a264194e5d7bbe168a72a8be057f42bb70af586836293c2ad0383 size: 3480
+

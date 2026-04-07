@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  ppt-agent-tools:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        # allow build-time override if you use ARG PYTHONPATH in Dockerfile
+        PYTHONPATH: ""
+    image: yourname/ppt-agent-tools:dev
+    container_name: ppt-agent-tools-dev
+    command: ["tail", "-f", "/dev/null"]
+    working_dir: /app
+    environment:
+      - PYTHONPATH=/app
+      - DEV_PORT=8000
+    ports:
+      - "8000:8000"    # change or remove as needed
+    volumes:
+      - ".:/app:delegated"
+    restart: unless-stopped
+    tty: true
+
