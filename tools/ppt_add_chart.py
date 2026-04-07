@@ -174,7 +174,7 @@ def add_chart(
             data=data,
             position=position,
             size=size,
-            chart_title=chart_title
+            title=chart_title
         )
         
         # Extract shape index from result (handle v3.0.x and v3.1.x)
