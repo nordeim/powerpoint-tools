@@ -713,3 +713,21 @@ PowerPoint_Tool_Development_Guide.md
 - Added reposition_shape() to cheatsheet
 - Added set_shape_text() to cheatsheet
 
+---
+
+All updates complete and validated. Summary:
+Comprehensive_Programming_and_Troubleshooting_Guide.md (4 changes)
+- Added ppt_merge_presentations.py to Rule 5 token enforcement list
+- Added reposition_shape() and set_shape_text() to Formatting & Editing cheatsheet
+- Added 3 new E2E troubleshooting tips: shape overflow on 4:3 slides, table overflow, overlay z-order
+Project_Architecture_Document.md (12 changes)
+- Tool count: 42 → 44 (9 occurrences updated, 0 remaining)
+- Shape Ops category: 4 → 6 tools (added reposition_shape, set_shape_text)
+- Core module lines: 4,438 → 4,437
+- ppt_add_shape.py example: --shape-type → --shape, added --fill-opacity, removed --transparency
+- Last Updated: December 3, 2025 → April 7, 2026
+- Validation Status: added "+ E2E Tested"
+- Version history: added 3.1.1.1 entry with E2E fixes
+- Known Limitations: added percentage positioning on 4:3 slides, RGBColor tuple access
+- Conclusion: added full E2E Validation Summary section with findings and key lesson
+

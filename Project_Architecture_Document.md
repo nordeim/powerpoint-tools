@@ -1,7 +1,7 @@
 # PowerPoint Agent Tools v3.1.1 - Comprehensive Architecture Document
 
 **Version**: 3.1.1  
-**Last Updated**: December 3, 2025  
+**Last Updated**: April 7, 2026  
 **Status**: Production-Ready  
 **Validation Status**: 100% Verified Against Codebase
 
@@ -41,7 +41,7 @@ The fundamental challenge: **Bridging stateless AI agents with stateful PowerPoi
 | Metric | Value |
 |--------|-------|
 | **Tools** | 44 stateless CLI tools |
-| **Core Module** | 4,438 lines (powerpoint_agent_core.py) |
+| **Core Module** | 4,437 lines (powerpoint_agent_core.py) |
 | **Exception Types** | 14 specialized exception classes |
 | **Validation Levels** | 4 (input, state, output, governance) |
 | **Schema Versions** | 3 (v1.1.1, v3.1.0, v3.1.1) |
@@ -62,7 +62,7 @@ The system follows a **hub-and-spoke architecture with governance enforcement**:
                                               │
                               ┌───────────────┴────────────────┐
                               │  CLI Argument Parsing Layer    │
-                              │  (42 Stateless Tools)          │
+                              │  (44 Stateless Tools)          │
                               └───────────────┬────────────────┘
                                               │
                   ┌─────────────────────────────┴──────────────────────────┐
@@ -620,7 +620,7 @@ def validate_file(
 
 ### Overview
 
-42 stateless CLI tools organized by function category:
+44 stateless CLI tools organized by function category:
 
 | Category | Tools | Count |
 |----------|-------|-------|
@@ -640,7 +640,7 @@ def validate_file(
 
 ### Standard Tool Interface Pattern
 
-All 42 tools follow this precise pattern (verified by validation report):
+All 44 tools follow this precise pattern (verified by validation report):
 
 ```python
 #!/usr/bin/env python3
@@ -756,9 +756,9 @@ if __name__ == "__main__":
 
 | Element | Purpose | Verification |
 |---------|---------|--------------|
-| **Hygiene Block** (Lines 11-13) | Suppress library warnings before JSON output | All 42 tools verified ✓ |
-| **PowerPointAgent Import** | Access core functionality | All 42 tools verified ✓ |
-| **Context Manager** | Acquire/release file locks safely | All 42 tools verified ✓ |
+| **Hygiene Block** (Lines 11-13) | Suppress library warnings before JSON output | All 44 tools verified ✓ |
+| **PowerPointAgent Import** | Access core functionality | All 44 tools verified ✓ |
+| **Context Manager** | Acquire/release file locks safely | All 44 tools verified ✓ |
 | **Version Tracking** | Capture before/after hashes | All tools verified ✓ |
 | **JSON Output** | Machine-parsable structured response | All tools verified ✓ |
 | **Exit Codes** | Standardized error signaling (0-5) | All tools verified ✓ |
@@ -774,13 +774,13 @@ if __name__ == "__main__":
 ```
 --file              (required) Path to .pptx file
 --slide             (required) Slide index (0-based)
---shape-type        (required) Shape type (see MSO_SHAPE enum)
+--shape             (required) Shape type (see MSO_SHAPE enum)
 --position          (required) Position (supports 5 formats: %, anchor, grid, absolute, inches)
 --size              (required) Size (supports 4 formats: %, absolute, aspect-ratio, fill)
 --fill-color        (optional) Fill color (#RRGGBB)
+--fill-opacity      (optional) Fill opacity (0.0-1.0)
 --line-color        (optional) Line color (#RRGGBB)
 --line-width        (optional) Line width in points
---transparency      (optional) Transparency 0-100
 --json              (optional) Output as JSON (default: true)
 ```
 
@@ -1437,7 +1437,7 @@ if not input_validation.is_valid:
 
 | Dimension | Status | Details |
 |-----------|--------|---------|
-| **Core Functionality** | ✓ Complete | All 42 tools implemented, tested |
+| **Core Functionality** | ✓ Complete | All 44 tools implemented, tested |
 | **Exception Handling** | ✓ Comprehensive | 14 exception types, standardized exit codes |
 | **Input Validation** | ✓ Robust | 4-level validation pipeline, schema validation |
 | **File Safety** | ✓ Atomic | OS-level locking, version tracking |
@@ -1454,6 +1454,7 @@ if not input_validation.is_valid:
 | Version | Release Date | Key Changes | Status |
 |---------|--------------|------------|--------|
 | 3.1.1 | December 2025 | Approval token enforcement for destructive ops | Current |
+| 3.1.1.1 | April 2026 | E2E validated; added reposition_shape, set_shape_text tools; fixed color validation, token enforcement gaps | Current |
 | 3.1.0 | November 2025 | Geometry-aware versioning, removed silent clamping | Stable |
 | 3.0.0 | October 2025 | z-order support, notes, background, crop, clone | Production |
 | 2.0.0 | August 2025 | Major feature expansion | Legacy |
@@ -1468,6 +1469,8 @@ if not input_validation.is_valid:
 | **Master slide editing limited** | Complex XML structure | Edit in PowerPoint, export, use as template |
 | **Large file timeout** | Protects against infinite loops | Split file into chunks, process incrementally |
 | **Embedded OLE objects** | python-pptx doesn't expose | Convert to images or link externally |
+| **Percentage positioning on 4:3 slides** | Calculations use 16:9 defaults | Use absolute inches for 4:3 presentations |
+| **Shape RGBColor access** | RGBColor is tuple-like, not object | Access via index `[0]`, `[1]`, `[2]` not `.red`/`.green`/`.blue` |
 
 ### Deployment Checklist
 
@@ -1536,12 +1539,27 @@ if not input_validation.is_valid:
 The PowerPoint Agent Tools v3.1.1 represents a **mature, production-grade system** for enabling AI agents to safely manipulate PowerPoint presentations. The architecture is characterized by:
 
 - **Governance-First Design**: Approval tokens and version tracking prevent catastrophic errors
-- **Hub-and-Spoke Elegance**: 42 stateless tools delegating to powerful core
+- **Hub-and-Spoke Elegance**: 44 stateless tools delegating to powerful core
 - **Multi-Level Validation**: Input → State → Output → Governance verification
 - **Atomic Guarantees**: OS-level file locking prevents corruption
 - **AI Optimization**: JSON-first interfaces with standardized error handling
 - **Accessibility Native**: WCAG 2.1 compliance built into core framework
 - **Production Hardened**: Comprehensive testing, security hardening, error classification
+
+### E2E Validation Summary (April 7, 2026)
+
+A full end-to-end test created a 7-slide presentation using the `powerpoint-skill`. All 7 slides pass structural validation (0 issues) and accessibility checks (WCAG AA, 0 issues). Two bugs were discovered and fixed during testing:
+
+1. **Color validation crash** in `ppt_add_shape.py`: `RGBColor` is tuple-like, not an object with `.red`/`.green`/`.blue`. Fixed: use index access.
+2. **Missing token enforcement** in `ppt_remove_shape.py`: Tool didn't pass `--approval-token` to core. Fixed: added argument, import, and exit code 4 handler.
+
+Two new tools were created during E2E testing:
+- **`ppt_reposition_shape.py`**: Move and/or resize shapes by absolute inches
+- **`ppt_set_shape_text.py`**: Update text content of existing shapes/text boxes
+
+**Key E2E lesson**: Percentage-based positioning uses 16:9 slide defaults (13.333" wide) even on 4:3 presentations (10" wide), causing overflow. Use absolute inches for precise positioning on non-16:9 slides.
+
+---
 
 This document serves as the authoritative reference for the architecture, integration patterns, and operational characteristics of the system.
 
@@ -1549,5 +1567,5 @@ This document serves as the authoritative reference for the architecture, integr
 
 **Document Generated**: December 3, 2025  
 **Architecture Version**: v3.1.1  
-**Validation Status**: 100% Verified Against Codebase  
+**Validation Status**: 100% Verified Against Codebase + E2E Tested
 **Last Verified**: Comprehensive validation report executed
